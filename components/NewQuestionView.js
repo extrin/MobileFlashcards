@@ -6,15 +6,12 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { addCardToDeck } from '../utils/api';
+import { handleUserInput } from '../utils/helpers';
 
 class NewQuestionView extends React.Component {
   state = {
     questionText: 'Please write question here',
     answerText: 'Please write answer here'
-  };
-
-  handleUserInput = (name, value) => {
-    this.setState({ name: value });
   };
 
   submit = () =>
@@ -33,16 +30,18 @@ class NewQuestionView extends React.Component {
           value={questionText}
           multiline={true}
           numberOfLines={4}
-          onChangeText={text => this.handleUserInput('questionText', { text })}
+          onChangeText={text => handleUserInput('questionText', { text })}
         />
         <Text>Answer:</Text>
         <TextInput
           value={answerText}
           multiline={true}
           numberOfLines={6}
-          onChangeText={text => this.handleUserInput('answerText', { text })}
+          onChangeText={text => handleUserInput('answerText', { text })}
         />
-        <TouchableOpacity onPress={this.submit} />
+        <TouchableOpacity onPress={this.submit}>
+          <Text>SUBMIT</Text>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
     );
   }
