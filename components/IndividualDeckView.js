@@ -27,3 +27,5 @@ class IndividualDeckView extends React.Component {
     );
   }
 }
+
+export default IndividualDeckView;
