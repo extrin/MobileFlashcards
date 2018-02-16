@@ -2,9 +2,9 @@ import React from 'react';
 import { TabNavigator } from 'react-navigation';
 import DeckListView from './DeckListView';
 import NewDeckView from './NewDeckView';
-import { light_primary_color, accent_color } from '../utils/colors';
+import { dark_primary_color, accent_color } from '../utils/colors';
 
-const TabNav = TabNavigator(
+export const TabNav = TabNavigator(
   {
     DeckListView: {
       screen: DeckListView,
@@ -24,6 +24,6 @@ const TabNav = TabNavigator(
       header: null
     },
     tabBarOptions: { activeTintColor: accent_color },
-    style: { backgroundColor: light_primary_color }
+    style: { backgroundColor: dark_primary_color }
   }
 );
