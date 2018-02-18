@@ -12,36 +12,34 @@ class DeckListView extends React.Component {
   }
 
   renderItem = ({ item }) => {
-    <TouchableOpacity onPress={this.onPressItem}>
-      <Text>{item.title}</Text>
-      <Text>
-        {typeof item.questions === 'undefined' ? 0 : item.questions.length}
-        cards
-      </Text>
-    </TouchableOpacity>;
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          console.log(item);
+          this.props.navigation.navigate('IndividualDeckView', {
+            deck: item
+          });
+        }}
+      >
+        <Text>{item.title}</Text>
+        <Text>{item.questions.length}</Text>
+      </TouchableOpacity>
+    );
   };
 
-  renderItemSeparator = () => {
+  renderItemSeparator = () => (
     <View
       style={{
         height: 1,
-        width: '86%',
-        backgroundColor: divider_color,
-        marginLeft: '14%'
+        backgroundColor: divider_color
       }}
-    />;
-  };
-
-  onPressItem = () => {
-    //TODO: Go to individual deck view when pressing item
-  };
+    />
+  );
 
   render() {
-    const { ready } = this.state;
+    const { ready, decks } = this.state;
 
     if (!ready) return <AppLoading />;
-
-    const { decks } = this.state;
 
     if (!decks)
       return (
@@ -49,12 +47,11 @@ class DeckListView extends React.Component {
           <Text>There are no decks created. Create one now!</Text>
         </View>
       );
-    console.log(decks);
+
     const data = Object.values(decks);
-    console.log(data);
 
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={data}
           renderItem={this.renderItem}

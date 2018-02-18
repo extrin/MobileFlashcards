@@ -1,18 +1,18 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MyStatusBar from './components/MyStatusBar';
-import { TabNav } from './components/Navigation';
+import { MainNavigator } from './components/Navigation';
 import { light_primary_color } from './utils/colors';
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <MyStatusBar
           backgroundColor={light_primary_color}
           barStyle="light-content"
         />
-        <TabNav />
+        <MainNavigator />
       </View>
     );
   }
@@ -20,9 +20,6 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flex: 1
   }
 });
