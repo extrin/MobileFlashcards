@@ -6,21 +6,25 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { saveDeckTitle } from '../utils/api';
-import { handleUserInput } from '../utils/api';
 
 class NewDeckView extends React.Component {
   state = { deckName: 'New Deck' };
 
-  submit = () => saveDeckTitle(this.state.deckName);
+  submit = () => {
+    saveDeckTitle(this.state.deckName);
+    this.setState({ deckName: 'New Deck' });
+  };
+
+  changeDeckName = text => this.setState({ deckName: text });
 
   render() {
     return (
       <KeyboardAvoidingView>
         <Text>What is the name of your new deck?</Text>
         <TextInput
-          value={deckName}
+          value={this.state.deckName}
           multiline={false}
-          onChangeText={text => handleUserInput('deckName', { text })}
+          onChangeText={text => this.changeDeckName(text)}
         />
         <TouchableOpacity onPress={this.submit}>
           <Text>SUBMIT</Text>
