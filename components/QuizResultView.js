@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 class QuizResultView extends React.Component {
   render() {
@@ -9,11 +8,9 @@ class QuizResultView extends React.Component {
     return (
       <View>
         <Text>Congrats! You finished this quiz!</Text>
-        <Text>`Your result: ${percentageCorrect}% of correct answers!`</Text>
+        <Text>Your result: {percentageCorrect} % of correct answers!</Text>
         <TouchableOpacity
-          onPress={this.props.navigation.dispatch(
-            NavigationActions.back({ key: 'Home' })
-          )}
+          onPress={() => this.props.navigation.navigate('Home')}
         >
           <Text>GO HOME</Text>
         </TouchableOpacity>
@@ -21,3 +18,5 @@ class QuizResultView extends React.Component {
     );
   }
 }
+
+export default QuizResultView;
