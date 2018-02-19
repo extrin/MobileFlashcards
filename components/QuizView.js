@@ -18,28 +18,17 @@ class QuizView extends React.Component {
 
   componentDidMount() {
     const { deck } = this.props.navigation.state.params;
+    console.log('component did mount');
     this.setState({
       currentQuestion: deck.questions[0].question,
       currentAnswer: deck.questions[0].answer
     });
   }
 
-  renderText = () => {
-    this.state.mode === 'question' ? (
-      <Text>{this.state.currentQuestion}</Text>
-    ) : (
-      <Text>{this.state.currentAnswer}</Text>
-    );
-  };
-
   changeMode = () => {
     this.state.mode === 'question'
       ? this.setState({ mode: 'answer' })
       : this.setState({ mode: 'question' });
-  };
-
-  renderOption = () => {
-    this.state.mode === 'question' ? 'Answer' : 'Question';
   };
 
   onIncorrectPress = () => {
@@ -49,7 +38,7 @@ class QuizView extends React.Component {
     if (nextIndex >= questionsCount) {
       this.props.navigation.navigate('QuizResultView', {
         questionsCount: questionsCount,
-        correctCount: this.state.correctAnswers
+        correctCount: this.state.correctAnswers + 1
       });
     } else {
       this.setState({
@@ -61,15 +50,22 @@ class QuizView extends React.Component {
   };
 
   onCorrectPress = () => {
-    this.setState({ correctAnswers: this.state.correctAnswers + 1 });
+    const correctCount = this.state.correctAnswers + 1;
+    this.setState({ correctAnswers: correctCount });
     this.onIncorrectPress();
   };
 
   render() {
     return (
       <View>
-        {this.renderText}
-        <Text onPress={this.changeMode}>{this.renderOption}</Text>
+        {this.state.mode === 'question' ? (
+          <Text>{this.state.currentQuestion}</Text>
+        ) : (
+          <Text>{this.state.currentAnswer}</Text>
+        )}
+        <TouchableOpacity onPress={this.changeMode}>
+          <Text>{this.state.mode === 'question' ? 'Answer' : 'Question'}</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={this.onCorrectPress}>
           <Text>Correct</Text>
         </TouchableOpacity>
