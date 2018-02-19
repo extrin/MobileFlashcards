@@ -15,7 +15,7 @@ class NewQuestionView extends React.Component {
 
   submit = () =>
     addCardToDeck(
-      this.props.deckTitle,
+      this.props.navigation.state.params.deckTitle,
       this.state.questionText,
       this.state.answerText
     );

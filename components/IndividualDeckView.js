@@ -10,11 +10,15 @@ class IndividualDeckView extends React.Component {
   };
 
   onAddCard = () => {
-    //TODO: Add Card
+    const { deck } = this.props.navigation.state.params;
+    this.props.navigation.navigate('NewQuestionView', {
+      deckTitle: deck.title
+    });
   };
 
   onStartQuiz = () => {
-    //TODO: Start Quiz
+    const { deck } = this.props.navigation.state.params;
+    this.props.navigation.navigate('QuizView', { deck: deck });
   };
 
   render() {

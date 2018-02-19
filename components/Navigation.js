@@ -67,5 +67,14 @@ export const MainNavigator = StackNavigator({
         backgroundColor: dark_primary_color
       }
     }
+  },
+  QuizResultView: {
+    screen: QuizResultView,
+    navigationOptions: {
+      headerTintColor: accent_color,
+      headerStyle: {
+        backgroundColor: dark_primary_color
+      }
+    }
   }
 });

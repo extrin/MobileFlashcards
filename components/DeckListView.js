@@ -15,7 +15,6 @@ class DeckListView extends React.Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          console.log(item);
           this.props.navigation.navigate('IndividualDeckView', {
             deck: item
           });
