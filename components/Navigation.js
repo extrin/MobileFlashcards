@@ -5,6 +5,7 @@ import NewDeckView from './NewDeckView';
 import IndividualDeckView from './IndividualDeckView';
 import QuizView from './QuizView';
 import NewQuestionView from './NewQuestionView';
+import QuizResultView from './QuizResultView';
 import {
   dark_primary_color,
   accent_color,
@@ -71,6 +72,7 @@ export const MainNavigator = StackNavigator({
   QuizResultView: {
     screen: QuizResultView,
     navigationOptions: {
+      title: 'Quiz Result',
       headerTintColor: accent_color,
       headerStyle: {
         backgroundColor: dark_primary_color
