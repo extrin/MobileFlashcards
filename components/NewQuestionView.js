@@ -13,12 +13,14 @@ class NewQuestionView extends React.Component {
     answerText: 'Please write answer here'
   };
 
-  submit = () =>
+  submit = () => {
     addCardToDeck(
       this.props.navigation.state.params.deckTitle,
       this.state.questionText,
       this.state.answerText
     );
+    this.props.navigation.goBack();
+  };
 
   changeQuestionText = text => this.setState({ questionText: text });
 
