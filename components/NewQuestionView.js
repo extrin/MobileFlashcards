@@ -1,16 +1,18 @@
 import React from 'react';
 import {
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableOpacity
-} from 'react-native';
+  KeyboardAvoidingContainer,
+  PrimaryText,
+  ButtonText,
+  PrimaryButton,
+  PrettyInput
+} from './StyledComponents';
 import { addCardToDeck } from '../utils/api';
+import { secondary_text_color } from '../utils/colors';
 
 class NewQuestionView extends React.Component {
   state = {
-    questionText: 'Please write question here',
-    answerText: 'Please write answer here'
+    questionText: '',
+    answerText: ''
   };
 
   submit = () => {
@@ -29,25 +31,29 @@ class NewQuestionView extends React.Component {
   render() {
     const { questionText, answerText } = this.state;
     return (
-      <KeyboardAvoidingView>
-        <Text>Question:</Text>
-        <TextInput
+      <KeyboardAvoidingContainer>
+        <PrimaryText>Question:</PrimaryText>
+        <PrettyInput
           value={questionText}
+          placeholder="Please write your question here"
+          placeholderTextColor={secondary_text_color}
           multiline={true}
           numberOfLines={4}
           onChangeText={text => this.changeQuestionText(text)}
         />
-        <Text>Answer:</Text>
-        <TextInput
+        <PrimaryText>Answer:</PrimaryText>
+        <PrettyInput
           value={answerText}
+          placeholder="Please write your answer here"
+          placeholderTextColor={secondary_text_color}
           multiline={true}
           numberOfLines={6}
           onChangeText={text => this.changeAnswerText(text)}
         />
-        <TouchableOpacity onPress={this.submit}>
-          <Text>SUBMIT</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+        <PrimaryButton onPress={this.submit}>
+          <ButtonText>SUBMIT</ButtonText>
+        </PrimaryButton>
+      </KeyboardAvoidingContainer>
     );
   }
 }

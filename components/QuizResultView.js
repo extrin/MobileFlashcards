@@ -1,20 +1,28 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+  Container,
+  PrimaryText,
+  SecondaryText,
+  PrimaryButton,
+  ButtonText
+} from './StyledComponents';
 
 class QuizResultView extends React.Component {
   render() {
     const { questionsCount, correctCount } = this.props.navigation.state.params;
+
     const percentageCorrect = correctCount / questionsCount * 100;
+
     return (
-      <View>
-        <Text>Congrats! You finished this quiz!</Text>
-        <Text>Your result: {percentageCorrect} % of correct answers!</Text>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Home')}
-        >
-          <Text>GO HOME</Text>
-        </TouchableOpacity>
-      </View>
+      <Container>
+        <PrimaryText>Congrats! You finished this quiz!</PrimaryText>
+        <SecondaryText>
+          Your result: {percentageCorrect} % of correct answers!
+        </SecondaryText>
+        <PrimaryButton onPress={() => this.props.navigation.navigate('Home')}>
+          <ButtonText>GO HOME</ButtonText>
+        </PrimaryButton>
+      </Container>
     );
   }
 }
