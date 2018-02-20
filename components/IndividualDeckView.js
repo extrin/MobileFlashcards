@@ -4,8 +4,9 @@ import {
   PrimaryText,
   SecondaryText,
   ButtonText,
+  FunnyText,
   PrimaryButton,
-  SecondaryButton
+  AccentButton
 } from './StyledComponents';
 import { getDeck } from '../utils/api';
 
@@ -42,9 +43,9 @@ class IndividualDeckView extends React.Component {
       <Container>
         <PrimaryText>{deck.title}</PrimaryText>
         <SecondaryText>{deck.questions.length} cards</SecondaryText>
-        <SecondaryButton onPress={this.onAddCard}>
-          <ButtonText>Add Card</ButtonText>
-        </SecondaryButton>
+        <AccentButton onPress={this.onAddCard}>
+          <FunnyText>Add Card</FunnyText>
+        </AccentButton>
         <PrimaryButton onPress={this.onStartQuiz}>
           <ButtonText>Start Quiz</ButtonText>
         </PrimaryButton>
