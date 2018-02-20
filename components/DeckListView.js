@@ -3,8 +3,10 @@ import { View, FlatList } from 'react-native';
 import {
   PrimaryText,
   SecondaryText,
+  ButtonText,
   TouchableContainer,
-  Container
+  Container,
+  PrimaryButton
 } from './StyledComponents';
 import { getAllDecks } from '../utils/api';
 import { AppLoading } from 'expo';
@@ -16,6 +18,11 @@ class DeckListView extends React.Component {
   componentDidMount() {
     getAllDecks().then(res => this.setState({ ready: true, decks: res }));
   }
+
+  refreshView = () => {
+    this.setState({ ready: false });
+    getAllDecks().then(res => this.setState({ ready: true, decks: res }));
+  };
 
   renderItem = ({ item }) => {
     return (
@@ -50,18 +57,25 @@ class DeckListView extends React.Component {
       return (
         <Container>
           <PrimaryText>There are no decks created. Create one now!</PrimaryText>
+          <PrimaryButton onPress={this.refreshView}>
+            <ButtonText>Refresh</ButtonText>
+          </PrimaryButton>
         </Container>
       );
 
     const data = Object.values(decks);
 
     return (
-      <Container style={{ flex: 1 }}>
+      <Container>
+        <PrimaryButton onPress={this.refreshView}>
+          <ButtonText>Refresh</ButtonText>
+        </PrimaryButton>
         <FlatList
           data={data}
           renderItem={this.renderItem}
           ItemSeparatorComponent={this.renderItemSeparator}
           keyExtractor={item => item.title}
+          style={{ width: '100%' }}
         />
       </Container>
     );
