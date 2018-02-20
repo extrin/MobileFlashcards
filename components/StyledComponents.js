@@ -19,6 +19,13 @@ export const ButtonText = styled.Text`
   font-variant: small-caps;
 `;
 
+export const FunnyText = styled.Text`
+  color: ${colors.purple};
+  font-size: 20;
+  padding: 2px;
+  font-variant: small-caps;
+`;
+
 export const PrimaryButton = styled.TouchableOpacity`
   background-color: ${colors.dark_primary_color};
   align-items: center;
@@ -28,6 +35,7 @@ export const PrimaryButton = styled.TouchableOpacity`
   height: 45px;
   margin: 20px auto;
   padding: 10px;
+  width: 120px;
 `;
 
 export const SecondaryButton = styled.TouchableOpacity`
@@ -39,6 +47,7 @@ export const SecondaryButton = styled.TouchableOpacity`
   height: 45px;
   margin: 20px auto;
   padding: 10px;
+  width: 120px;
 `;
 
 export const AccentButton = styled.TouchableOpacity`
@@ -50,6 +59,7 @@ export const AccentButton = styled.TouchableOpacity`
   height: 45px;
   margin: 20px auto;
   padding: 10px;
+  width: 120px;
 `;
 
 export const Container = styled.View`
@@ -60,7 +70,6 @@ export const Container = styled.View`
 `;
 
 export const TouchableContainer = styled.TouchableOpacity`
-  flex: 1;
   background-color: ${colors.white};
   padding: 15px;
   align-items: center;
@@ -68,18 +77,26 @@ export const TouchableContainer = styled.TouchableOpacity`
 
 export const CorrectButton = styled.TouchableOpacity`
   background-color: ${colors.primary_color};
-  height: 45px;
-  border-radius: 2px;
   align-items: center;
-  align-self: center;
+  align-self: flex-end;
+  justify-content: center;
+  border-radius: 2px;
+  height: 45px;
+  margin: 5px auto;
+  padding: 10px;
+  width: 120px;
 `;
 
 export const IncorrectButton = styled.TouchableOpacity`
   background-color: ${colors.red};
-  height: 45px;
-  border-radius: 2px;
   align-items: center;
-  align-self: center;
+  align-self: flex-end;
+  justify-content: center;
+  border-radius: 2px;
+  height: 45px;
+  margin: 5px auto;
+  padding: 10px;
+  width: 120px;
 `;
 
 export const KeyboardAvoidingContainer = styled.KeyboardAvoidingView`
