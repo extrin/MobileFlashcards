@@ -1,35 +1,39 @@
 import React from 'react';
 import {
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableOpacity
-} from 'react-native';
+  KeyboardAvoidingContainer,
+  PrimaryText,
+  ButtonText,
+  PrimaryButton,
+  PrettyInput
+} from './StyledComponents';
 import { saveDeckTitle } from '../utils/api';
+import { secondary_text_color } from '../utils/colors';
 
 class NewDeckView extends React.Component {
-  state = { deckName: 'New Deck' };
+  state = { deckName: '' };
 
   submit = () => {
     saveDeckTitle(this.state.deckName);
-    this.setState({ deckName: 'New Deck' });
+    this.setState({ deckName: '' });
   };
 
   changeDeckName = text => this.setState({ deckName: text });
 
   render() {
     return (
-      <KeyboardAvoidingView>
-        <Text>What is the name of your new deck?</Text>
-        <TextInput
+      <KeyboardAvoidingContainer>
+        <PrimaryText>What is the name of your new deck?</PrimaryText>
+        <PrettyInput
           value={this.state.deckName}
+          placeholder="New Deck"
+          placeholderTextColor={secondary_text_color}
           multiline={false}
           onChangeText={text => this.changeDeckName(text)}
         />
-        <TouchableOpacity onPress={this.submit}>
-          <Text>SUBMIT</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+        <PrimaryButton onPress={this.submit}>
+          <ButtonText>SUBMIT</ButtonText>
+        </PrimaryButton>
+      </KeyboardAvoidingContainer>
     );
   }
 }

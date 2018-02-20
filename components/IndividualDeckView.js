@@ -1,5 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
+import {
+  Container,
+  PrimaryText,
+  SecondaryText,
+  ButtonText,
+  PrimaryButton,
+  SecondaryButton
+} from './StyledComponents';
 import { getDeck } from '../utils/api';
 
 class IndividualDeckView extends React.Component {
@@ -26,22 +33,22 @@ class IndividualDeckView extends React.Component {
 
     if (!deck)
       return (
-        <View>
-          <Text>No deck!</Text>
-        </View>
+        <Container>
+          <SecondaryText>No deck!</SecondaryText>
+        </Container>
       );
 
     return (
-      <View>
-        <Text>{deck.title}</Text>
-        <Text>{deck.questions.length} cards</Text>
-        <TouchableOpacity onPress={this.onAddCard}>
-          <Text>Add Card</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onStartQuiz}>
-          <Text>Start Quiz</Text>
-        </TouchableOpacity>
-      </View>
+      <Container>
+        <PrimaryText>{deck.title}</PrimaryText>
+        <SecondaryText>{deck.questions.length} cards</SecondaryText>
+        <SecondaryButton onPress={this.onAddCard}>
+          <ButtonText>Add Card</ButtonText>
+        </SecondaryButton>
+        <PrimaryButton onPress={this.onStartQuiz}>
+          <ButtonText>Start Quiz</ButtonText>
+        </PrimaryButton>
+      </Container>
     );
   }
 }

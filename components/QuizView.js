@@ -1,5 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+  Container,
+  PrimaryText,
+  SecondaryText,
+  SecondaryButton,
+  ButtonText,
+  CorrectButton,
+  IncorrectButton
+} from 'react-native';
 
 class QuizView extends React.Component {
   state = {
@@ -18,7 +26,7 @@ class QuizView extends React.Component {
 
   componentDidMount() {
     const { deck } = this.props.navigation.state.params;
-    console.log('component did mount');
+
     this.setState({
       currentQuestion: deck.questions[0].question,
       currentAnswer: deck.questions[0].answer
@@ -56,23 +64,24 @@ class QuizView extends React.Component {
   };
 
   render() {
+    const { currentAnswer, currentQuestion, mode } = this.state;
     return (
-      <View>
-        {this.state.mode === 'question' ? (
-          <Text>{this.state.currentQuestion}</Text>
-        ) : (
-          <Text>{this.state.currentAnswer}</Text>
-        )}
-        <TouchableOpacity onPress={this.changeMode}>
-          <Text>{this.state.mode === 'question' ? 'Answer' : 'Question'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onCorrectPress}>
-          <Text>Correct</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onIncorrectPress}>
-          <Text>Incorrect</Text>
-        </TouchableOpacity>
-      </View>
+      <Container>
+        <PrimaryText>
+          {mode === 'question' ? currentQuestion : currentAnswer}
+        </PrimaryText>
+        <AccentButton onPress={this.changeMode}>
+          <SecondaryText>
+            {mode === 'question' ? 'Answer' : 'Question'}
+          </SecondaryText>
+        </AccentButton>
+        <CorrectButton onPress={this.onCorrectPress}>
+          <ButtonText>Correct</ButtonText>
+        </CorrectButton>
+        <IncorrectButton onPress={this.onIncorrectPress}>
+          <ButtonText>Incorrect</ButtonText>
+        </IncorrectButton>
+      </Container>
     );
   }
 }
