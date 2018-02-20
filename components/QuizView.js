@@ -6,8 +6,9 @@ import {
   SecondaryButton,
   ButtonText,
   CorrectButton,
-  IncorrectButton
-} from 'react-native';
+  IncorrectButton,
+  AccentButton
+} from './StyledComponents';
 
 class QuizView extends React.Component {
   state = {
