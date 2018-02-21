@@ -9,6 +9,7 @@ import {
   IncorrectButton,
   AccentButton
 } from './StyledComponents';
+import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
 
 class QuizView extends React.Component {
   state = {
@@ -27,6 +28,8 @@ class QuizView extends React.Component {
 
   componentDidMount() {
     const { deck } = this.props.navigation.state.params;
+
+    clearLocalNotification().then(setLocalNotification());
 
     this.setState({
       currentQuestion: deck.questions[0].question,
