@@ -47,7 +47,8 @@ class QuizView extends React.Component {
     if (nextIndex >= questionsCount) {
       this.props.navigation.navigate('QuizResultView', {
         questionsCount: questionsCount,
-        correctCount: this.state.correctAnswers
+        correctCount: this.state.correctAnswers,
+        deck: deck
       });
     } else {
       this.setState({
