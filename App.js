@@ -3,8 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import MyStatusBar from './components/MyStatusBar';
 import { MainNavigator } from './components/Navigation';
 import { light_primary_color } from './utils/colors';
+import { setLocalNotification } from './utils/helpers';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <View style={styles.container}>

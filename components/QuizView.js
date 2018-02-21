@@ -9,6 +9,7 @@ import {
   IncorrectButton,
   AccentButton
 } from './StyledComponents';
+import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
 
 class QuizView extends React.Component {
   state = {
@@ -28,6 +29,8 @@ class QuizView extends React.Component {
   componentDidMount() {
     const { deck } = this.props.navigation.state.params;
 
+    clearLocalNotification().then(setLocalNotification());
+
     this.setState({
       currentQuestion: deck.questions[0].question,
       currentAnswer: deck.questions[0].answer
@@ -42,12 +45,13 @@ class QuizView extends React.Component {
 
   onIncorrectPress = () => {
     const { deck } = this.props.navigation.state.params;
-    questionsCount = deck.questions.length;
-    nextIndex = this.state.currentIndex + 1;
+    const questionsCount = deck.questions.length;
+    const nextIndex = this.state.currentIndex + 1;
     if (nextIndex >= questionsCount) {
       this.props.navigation.navigate('QuizResultView', {
         questionsCount: questionsCount,
-        correctCount: this.state.correctAnswers + 1
+        correctCount: this.state.correctAnswers,
+        deck: deck
       });
     } else {
       this.setState({
@@ -59,15 +63,21 @@ class QuizView extends React.Component {
   };
 
   onCorrectPress = () => {
-    const correctCount = this.state.correctAnswers + 1;
-    this.setState({ correctAnswers: correctCount });
-    this.onIncorrectPress();
+    this.setState(
+      { correctAnswers: this.state.correctAnswers + 1 },
+      this.onIncorrectPress()
+    );
   };
 
   render() {
-    const { currentAnswer, currentQuestion, mode } = this.state;
+    const { currentAnswer, currentQuestion, mode, currentIndex } = this.state;
+    const { deck } = this.props.navigation.state.params;
+    const questionsCount = deck.questions.length;
     return (
       <Container>
+        <SecondaryText>
+          {currentIndex + 1}/{questionsCount}
+        </SecondaryText>
         <PrimaryText>
           {mode === 'question' ? currentQuestion : currentAnswer}
         </PrimaryText>
