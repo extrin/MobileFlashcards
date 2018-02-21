@@ -5,7 +5,8 @@ import {
   SecondaryText,
   PrimaryButton,
   ButtonText,
-  FunnyText
+  FunnyText,
+  AccentButton
 } from './StyledComponents';
 
 class QuizResultView extends React.Component {
@@ -19,9 +20,10 @@ class QuizResultView extends React.Component {
     const percentageCorrect = correctCount / questionsCount * 100;
     return (
       <Container>
-        <PrimaryText>Congrats! You finished this quiz!</PrimaryText>
+        <PrimaryText>Congrats!</PrimaryText>
+        <PrimaryText>You finished this quiz!</PrimaryText>
         <SecondaryText>
-          Your result: {percentageCorrect} % of correct answers!
+          Your result: {percentageCorrect}% of correct answers!
         </SecondaryText>
         <PrimaryButton
           onPress={() =>
