@@ -13,7 +13,7 @@ class NewDeckView extends React.Component {
   state = { deckName: '' };
 
   submit = () => {
-    const { deckTitle } = this.state.deckName;
+    const deckTitle = this.state.deckName;
     saveDeckTitle(deckTitle);
     this.setState({ deckName: '' });
     this.props.navigation.navigate('IndividualDeckView', {

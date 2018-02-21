@@ -42,8 +42,8 @@ class QuizView extends React.Component {
 
   onIncorrectPress = () => {
     const { deck } = this.props.navigation.state.params;
-    questionsCount = deck.questions.length;
-    nextIndex = this.state.currentIndex + 1;
+    const questionsCount = deck.questions.length;
+    const nextIndex = this.state.currentIndex + 1;
     if (nextIndex >= questionsCount) {
       this.props.navigation.navigate('QuizResultView', {
         questionsCount: questionsCount,
@@ -60,8 +60,10 @@ class QuizView extends React.Component {
   };
 
   onCorrectPress = () => {
-    const correctCount = this.state.correctAnswers + 1;
-    this.setState({ correctAnswers: correctCount }, this.onIncorrectPress());
+    this.setState(
+      { correctAnswers: this.state.correctAnswers + 1 },
+      this.onIncorrectPress()
+    );
   };
 
   render() {
