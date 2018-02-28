@@ -11,11 +11,8 @@ import {
 
 class QuizResultView extends React.Component {
   render() {
-    const {
-      questionsCount,
-      correctCount,
-      deck
-    } = this.props.navigation.state.params;
+    const { navigation } = this.props;
+    const { questionsCount, correctCount, deck } = navigation.state.params;
 
     const percentageCorrect = correctCount / questionsCount * 100;
     return (
@@ -27,15 +24,13 @@ class QuizResultView extends React.Component {
         </SecondaryText>
         <PrimaryButton
           onPress={() =>
-            this.props.navigation.navigate('IndividualDeckView', { deck: deck })
+            navigation.navigate('IndividualDeckView', { deck: deck })
           }
         >
           <ButtonText>GO BACK</ButtonText>
         </PrimaryButton>
         <AccentButton
-          onPress={() =>
-            this.props.navigation.navigate('QuizView', { deck: deck })
-          }
+          onPress={() => navigation.navigate('QuizView', { deck: deck })}
         >
           <FunnyText>RESTART QUIZ</FunnyText>
         </AccentButton>

@@ -18,8 +18,9 @@ class IndividualDeckView extends React.Component {
   };
 
   onAddCard = () => {
-    const { deck } = this.props.navigation.state.params;
-    this.props.navigation.navigate('NewQuestionView', {
+    const { navigation } = this.props;
+    const { deck } = navigation.state.params;
+    navigation.navigate('NewQuestionView', {
       deckTitle: deck.title
     });
   };

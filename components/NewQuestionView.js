@@ -16,12 +16,13 @@ class NewQuestionView extends React.Component {
   };
 
   submit = () => {
+    const { navigation } = this.props;
     addCardToDeck(
-      this.props.navigation.state.params.deckTitle,
+      navigation.state.params.deckTitle,
       this.state.questionText,
       this.state.answerText
     );
-    this.props.navigation.goBack();
+    navigation.goBack();
   };
 
   changeQuestionText = text => this.setState({ questionText: text });
