@@ -13,14 +13,19 @@ export function decks(state = {}, action) {
         [action.title]: { title: action.title, questions: [] }
       };
     case ADD_QUESTION:
+      const updatedQuestions = state[action.deckTitle].questions.concat({
+        question: action.question,
+        answer: action.answer
+      });
       return {
         ...state,
         [action.deckTitle]: {
-          ...[action.deckTitle],
-          questions: questions.concat([
-            { question: action.question, answer: action.answer }
-          ])
+          title: action.deckTitle,
+          questions: updatedQuestions
         }
       };
+
+    default:
+      return state;
   }
 }
