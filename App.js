@@ -6,7 +6,7 @@ import { light_primary_color } from './utils/colors';
 import { setLocalNotification } from './utils/helpers';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { decks } from './reducers';
+import reducer from './reducers/index';
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -15,7 +15,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Provider store={createStore(decks)}>
+      <Provider store={createStore(reducer)}>
         <View style={styles.container}>
           <MyStatusBar
             backgroundColor={light_primary_color}
