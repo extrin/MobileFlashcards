@@ -11,25 +11,25 @@ import {
 import { getAllDecks } from '../utils/api';
 import { AppLoading } from 'expo';
 import { divider_color } from '../utils/colors';
+import { loadDecks } from '../actions';
+import { connect } from 'react-redux';
 
 class DeckListView extends React.Component {
-  state = { ready: false, decks: {} };
+  state = { ready: false };
 
   componentDidMount() {
-    getAllDecks().then(res => this.setState({ ready: true, decks: res }));
+    const { dispatch } = this.props;
+    getAllDecks()
+      .then(res => dispatch(loadDecks(res)))
+      .then(this.setState({ ready: true }));
   }
-
-  refreshView = () => {
-    this.setState({ ready: false });
-    getAllDecks().then(res => this.setState({ ready: true, decks: res }));
-  };
 
   renderItem = ({ item }) => {
     return (
       <TouchableContainer
         onPress={() => {
           this.props.navigation.navigate('IndividualDeckView', {
-            deck: item
+            deck: item.title
           });
         }}
       >
@@ -49,7 +49,8 @@ class DeckListView extends React.Component {
   );
 
   render() {
-    const { ready, decks } = this.state;
+    const { ready } = this.state;
+    const { decks } = this.props;
 
     if (!ready) return <AppLoading />;
 
@@ -57,9 +58,6 @@ class DeckListView extends React.Component {
       return (
         <Container>
           <PrimaryText>There are no decks created. Create one now!</PrimaryText>
-          <PrimaryButton onPress={this.refreshView}>
-            <ButtonText>Refresh</ButtonText>
-          </PrimaryButton>
         </Container>
       );
 
@@ -67,9 +65,6 @@ class DeckListView extends React.Component {
 
     return (
       <Container>
-        <PrimaryButton onPress={this.refreshView}>
-          <ButtonText>Refresh</ButtonText>
-        </PrimaryButton>
         <FlatList
           data={data}
           renderItem={this.renderItem}
@@ -82,4 +77,8 @@ class DeckListView extends React.Component {
   }
 }
 
-export default DeckListView;
+function mapStateToProps(decks) {
+  return { decks };
+}
+
+export default connect(mapStateToProps)(DeckListView);

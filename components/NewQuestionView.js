@@ -8,6 +8,8 @@ import {
 } from './StyledComponents';
 import { addCardToDeck } from '../utils/api';
 import { secondary_text_color } from '../utils/colors';
+import { addQuestion } from '../actions';
+import { connect } from 'react-redux';
 
 class NewQuestionView extends React.Component {
   state = {
@@ -16,11 +18,11 @@ class NewQuestionView extends React.Component {
   };
 
   submit = () => {
-    const { navigation } = this.props;
-    const { deckTitle, onAddQuestion } = navigation.state.params;
+    const { navigation, dispatch, deck } = this.props;
     const { questionText, answerText } = this.state;
-    addCardToDeck(deckTitle, questionText, answerText);
-    onAddQuestion(deckTitle);
+
+    addCardToDeck(deck.title, questionText, answerText);
+    dispatch(addQuestion(deck.title, questionText, answerText));
     navigation.goBack();
   };
 
@@ -50,7 +52,7 @@ class NewQuestionView extends React.Component {
           numberOfLines={6}
           onChangeText={text => this.changeAnswerText(text)}
         />
-        <PrimaryButton onPress={this.submit}>
+        <PrimaryButton onPress={() => this.submit()}>
           <ButtonText>SUBMIT</ButtonText>
         </PrimaryButton>
       </KeyboardAvoidingContainer>
@@ -58,4 +60,11 @@ class NewQuestionView extends React.Component {
   }
 }
 
-export default NewQuestionView;
+function mapStateToProps(state, props) {
+  const { deck } = props.navigation.state.params;
+  return {
+    deck: state[deck]
+  };
+}
+
+export default connect(mapStateToProps)(NewQuestionView);

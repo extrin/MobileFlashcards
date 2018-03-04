@@ -9,44 +9,29 @@ import {
   AccentButton
 } from './StyledComponents';
 import { getDeck } from '../utils/api';
+import { connect } from 'react-redux';
 
 class IndividualDeckView extends React.Component {
-  state = { deck: this.props.navigation.state.params.deck };
-
   static navigationOptions = ({ navigation }) => {
     const { deck } = navigation.state.params;
     if (!deck) return { title: 'DeckTitle' };
-    return { title: deck.title };
+    return { title: deck };
   };
 
-  onAddQuestion = title => {
+  onAddCard = deckTitle => {
     const { navigation } = this.props;
-    getDeck(title).then(res => {
-      navigation.setParams({ deck: res });
-      this.setState({ deck: res });
-    });
-    console.log('onQuestionAdd');
-  };
-
-  onAddCard = () => {
-    const { navigation } = this.props;
-    const { deck } = this.state;
     navigation.navigate('NewQuestionView', {
-      deckTitle: deck.title,
-      onAddQuestion: this.onAddQuestion
+      deck: deckTitle
     });
   };
 
-  onStartQuiz = () => {
+  onStartQuiz = deckTitle => {
     const { navigation } = this.props;
-    const { deck } = this.state;
-    getDeck(deck.title).then(res => {
-      navigation.navigate('QuizView', { deck: res });
-    });
+    navigation.navigate('QuizView', { deck: deckTitle });
   };
 
   render() {
-    const { deck } = this.props.navigation.state.params;
+    const { deck } = this.props;
 
     if (!deck)
       return (
@@ -59,10 +44,18 @@ class IndividualDeckView extends React.Component {
       <Container>
         <PrimaryText>{deck.title}</PrimaryText>
         <SecondaryText>{deck.questions.length} cards</SecondaryText>
-        <AccentButton onPress={this.onAddCard}>
+        <AccentButton
+          onPress={() => {
+            this.onAddCard(deck.title);
+          }}
+        >
           <FunnyText>Add Card</FunnyText>
         </AccentButton>
-        <PrimaryButton onPress={this.onStartQuiz}>
+        <PrimaryButton
+          onPress={() => {
+            this.onStartQuiz(deck.title);
+          }}
+        >
           <ButtonText>Start Quiz</ButtonText>
         </PrimaryButton>
       </Container>
@@ -70,4 +63,11 @@ class IndividualDeckView extends React.Component {
   }
 }
 
-export default IndividualDeckView;
+function mapStateToProps(state, props) {
+  const { deck } = props.navigation.state.params;
+  return {
+    deck: state[deck]
+  };
+}
+
+export default connect(mapStateToProps)(IndividualDeckView);

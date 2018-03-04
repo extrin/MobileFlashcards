@@ -10,6 +10,7 @@ import {
   AccentButton
 } from './StyledComponents';
 import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
+import { connect } from 'react-redux';
 
 class QuizView extends React.Component {
   state = {
@@ -23,11 +24,11 @@ class QuizView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { deck } = navigation.state.params;
     if (!deck) return { title: 'DeckTitle - Quiz' };
-    return { title: `${deck.title} - Quiz` };
+    return { title: `${deck} - Quiz` };
   };
 
   componentDidMount() {
-    const { deck } = this.props.navigation.state.params;
+    const { deck } = this.props;
 
     clearLocalNotification().then(setLocalNotification());
 
@@ -44,36 +45,44 @@ class QuizView extends React.Component {
   };
 
   onIncorrectPress = () => {
-    const { navigation } = this.props;
-    const { deck } = navigation.state.params;
+    const { navigation, deck } = this.props;
     const questionsCount = deck.questions.length;
     const nextIndex = this.state.currentIndex + 1;
     if (nextIndex >= questionsCount) {
       navigation.navigate('QuizResultView', {
         questionsCount: questionsCount,
         correctCount: this.state.correctAnswers,
-        deck: deck
+        deck: deck.title,
+        key: navigation.state.key
+      });
+      this.setState({
+        mode: 'question',
+        correctAnswers: 0,
+        currentQuestion: deck.questions[0].question,
+        currentAnswer: deck.questions[0].answer,
+        currentIndex: 0
       });
     } else {
-      this.setState({
-        currentIndex: nextIndex,
-        currentAnswer: deck.questions[nextIndex].answer,
-        currentQuestion: deck.questions[nextIndex].question
+      this.setState(prevState => {
+        return {
+          currentIndex: prevState.currentIndex + 1,
+          currentAnswer: deck.questions[prevState.currentIndex + 1].answer,
+          currentQuestion: deck.questions[prevState.currentIndex + 1].question
+        };
       });
     }
   };
 
   onCorrectPress = () => {
-    this.setState(
-      { correctAnswers: this.state.correctAnswers + 1 },
-      this.onIncorrectPress()
-    );
+    this.setState(prevState => {
+      return { correctAnswers: prevState.correctAnswers + 1 };
+    });
+    this.onIncorrectPress();
   };
 
   render() {
     const { currentAnswer, currentQuestion, mode, currentIndex } = this.state;
-    const { navigation } = this.props;
-    const { deck } = navigation.state.params;
+    const { navigation, deck } = this.props;
     const questionsCount = deck.questions.length;
     return (
       <Container>
@@ -99,4 +108,11 @@ class QuizView extends React.Component {
   }
 }
 
-export default QuizView;
+function mapStateToProps(state, props) {
+  const { deck } = props.navigation.state.params;
+  return {
+    deck: state[deck]
+  };
+}
+
+export default connect(mapStateToProps)(QuizView);

@@ -8,17 +8,18 @@ import {
 } from './StyledComponents';
 import { saveDeckTitle } from '../utils/api';
 import { secondary_text_color } from '../utils/colors';
+import { addDeck } from '../actions';
+import { connect } from 'react-redux';
 
 class NewDeckView extends React.Component {
   state = { deckName: '' };
 
   submit = () => {
-    const deckTitle = this.state.deckName;
-    saveDeckTitle(deckTitle);
-    this.setState({ deckName: '' });
-    this.props.navigation.navigate('IndividualDeckView', {
-      deck: { title: deckTitle, questions: [] }
-    });
+    const { deckName } = this.state;
+    const { dispatch, navigation } = this.props;
+    saveDeckTitle(deckName)
+      .then(res => dispatch(addDeck(deckName)))
+      .then(navigation.navigate('IndividualDeckView', { deck: deckName }));
   };
 
   changeDeckName = text => this.setState({ deckName: text });
@@ -42,4 +43,4 @@ class NewDeckView extends React.Component {
   }
 }
 
-export default NewDeckView;
+export default connect()(NewDeckView);
