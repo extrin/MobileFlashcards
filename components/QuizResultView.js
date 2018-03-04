@@ -8,13 +8,22 @@ import {
   FunnyText,
   AccentButton
 } from './StyledComponents';
+import { connect } from 'react-redux';
+import { nullCorrectAnswers } from '../actions/correctAnswers';
 
 class QuizResultView extends React.Component {
-  render() {
-    const { navigation } = this.props;
-    const { questionsCount, correctCount, deck, key } = navigation.state.params;
+  goBack = fromWhere => {
+    const { dispatch, navigation } = this.props;
 
-    const percentageCorrect = Math.round(correctCount / questionsCount * 100);
+    navigation.goBack(fromWhere);
+    dispatch(nullCorrectAnswers());
+  };
+
+  render() {
+    const { navigation, correctAnswers } = this.props;
+    const { questionsCount, deck, key } = navigation.state.params;
+
+    const percentageCorrect = Math.round(correctAnswers / questionsCount * 100);
 
     return (
       <Container>
@@ -23,10 +32,10 @@ class QuizResultView extends React.Component {
         <SecondaryText>
           Your result: {percentageCorrect} % of correct answers!
         </SecondaryText>
-        <PrimaryButton onPress={() => navigation.goBack(key)}>
+        <PrimaryButton onPress={() => this.goBack(key)}>
           <ButtonText>GO BACK</ButtonText>
         </PrimaryButton>
-        <AccentButton onPress={() => navigation.goBack(navigation.state.key)}>
+        <AccentButton onPress={() => this.goBack(navigation.state.key)}>
           <FunnyText>RESTART QUIZ</FunnyText>
         </AccentButton>
       </Container>
@@ -34,4 +43,8 @@ class QuizResultView extends React.Component {
   }
 }
 
-export default QuizResultView;
+function mapStateToProps({ correctAnswers }) {
+  return { correctAnswers };
+}
+
+export default connect(mapStateToProps)(QuizResultView);

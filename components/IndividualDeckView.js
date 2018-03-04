@@ -63,10 +63,10 @@ class IndividualDeckView extends React.Component {
   }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps({ decks }, props) {
   const { deck } = props.navigation.state.params;
   return {
-    deck: state[deck]
+    deck: decks[deck]
   };
 }
 

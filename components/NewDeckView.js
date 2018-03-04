@@ -8,7 +8,7 @@ import {
 } from './StyledComponents';
 import { saveDeckTitle } from '../utils/api';
 import { secondary_text_color } from '../utils/colors';
-import { addDeck } from '../actions';
+import { addDeck } from '../actions/decks';
 import { connect } from 'react-redux';
 
 class NewDeckView extends React.Component {

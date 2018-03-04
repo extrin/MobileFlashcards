@@ -11,7 +11,7 @@ import {
 import { getAllDecks } from '../utils/api';
 import { AppLoading } from 'expo';
 import { divider_color } from '../utils/colors';
-import { loadDecks } from '../actions';
+import { loadDecks } from '../actions/decks';
 import { connect } from 'react-redux';
 
 class DeckListView extends React.Component {
@@ -77,7 +77,7 @@ class DeckListView extends React.Component {
   }
 }
 
-function mapStateToProps(decks) {
+function mapStateToProps({ decks }) {
   return { decks };
 }
 

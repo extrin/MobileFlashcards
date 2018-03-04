@@ -8,7 +8,7 @@ import {
 } from './StyledComponents';
 import { addCardToDeck } from '../utils/api';
 import { secondary_text_color } from '../utils/colors';
-import { addQuestion } from '../actions';
+import { addQuestion } from '../actions/decks';
 import { connect } from 'react-redux';
 
 class NewQuestionView extends React.Component {
@@ -60,10 +60,10 @@ class NewQuestionView extends React.Component {
   }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps({ decks }, props) {
   const { deck } = props.navigation.state.params;
   return {
-    deck: state[deck]
+    deck: decks[deck]
   };
 }
 

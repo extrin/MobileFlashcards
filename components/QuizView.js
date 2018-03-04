@@ -11,11 +11,11 @@ import {
 } from './StyledComponents';
 import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
 import { connect } from 'react-redux';
+import { incrementCorrectAnswers } from '../actions/correctAnswers';
 
 class QuizView extends React.Component {
   state = {
     mode: 'question',
-    correctAnswers: 0,
     currentQuestion: '',
     currentAnswer: '',
     currentIndex: 0
@@ -45,19 +45,17 @@ class QuizView extends React.Component {
   };
 
   onIncorrectPress = () => {
-    const { navigation, deck } = this.props;
+    const { navigation, deck, dispatch } = this.props;
     const questionsCount = deck.questions.length;
     const nextIndex = this.state.currentIndex + 1;
     if (nextIndex >= questionsCount) {
       navigation.navigate('QuizResultView', {
         questionsCount: questionsCount,
-        correctCount: this.state.correctAnswers,
         deck: deck.title,
         key: navigation.state.key
       });
       this.setState({
         mode: 'question',
-        correctAnswers: 0,
         currentQuestion: deck.questions[0].question,
         currentAnswer: deck.questions[0].answer,
         currentIndex: 0
@@ -74,9 +72,7 @@ class QuizView extends React.Component {
   };
 
   onCorrectPress = () => {
-    this.setState(prevState => {
-      return { correctAnswers: prevState.correctAnswers + 1 };
-    });
+    this.props.dispatch(incrementCorrectAnswers());
     this.onIncorrectPress();
   };
 
@@ -108,10 +104,10 @@ class QuizView extends React.Component {
   }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps({ decks }, props) {
   const { deck } = props.navigation.state.params;
   return {
-    deck: state[deck]
+    deck: decks[deck]
   };
 }
 
