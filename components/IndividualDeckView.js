@@ -11,23 +11,35 @@ import {
 import { getDeck } from '../utils/api';
 
 class IndividualDeckView extends React.Component {
+  state = { deck: this.props.navigation.state.params.deck };
+
   static navigationOptions = ({ navigation }) => {
     const { deck } = navigation.state.params;
     if (!deck) return { title: 'DeckTitle' };
     return { title: deck.title };
   };
 
+  onAddQuestion = title => {
+    const { navigation } = this.props;
+    getDeck(title).then(res => {
+      navigation.setParams({ deck: res });
+      this.setState({ deck: res });
+    });
+    console.log('onQuestionAdd');
+  };
+
   onAddCard = () => {
     const { navigation } = this.props;
-    const { deck } = navigation.state.params;
+    const { deck } = this.state;
     navigation.navigate('NewQuestionView', {
-      deckTitle: deck.title
+      deckTitle: deck.title,
+      onAddQuestion: this.onAddQuestion
     });
   };
 
   onStartQuiz = () => {
     const { navigation } = this.props;
-    const { deck } = navigation.state.params;
+    const { deck } = this.state;
     getDeck(deck.title).then(res => {
       navigation.navigate('QuizView', { deck: res });
     });
