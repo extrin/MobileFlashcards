@@ -17,11 +17,10 @@ class NewQuestionView extends React.Component {
 
   submit = () => {
     const { navigation } = this.props;
-    addCardToDeck(
-      navigation.state.params.deckTitle,
-      this.state.questionText,
-      this.state.answerText
-    );
+    const { deckTitle, onAddQuestion } = navigation.state.params;
+    const { questionText, answerText } = this.state;
+    addCardToDeck(deckTitle, questionText, answerText);
+    onAddQuestion(deckTitle);
     navigation.goBack();
   };
 
